@@ -1,12 +1,99 @@
-﻿@page
-@model IndexModel
-@{    
-    ViewData["Title"] = "Home page";
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab Values Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    div {
+      margin-bottom: 10px;
+    }
+    label {
+      display: inline-block;
+      width: 100px;
+    }
+    input {
+      padding: 5px;
+      width: 200px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #CCCCCC;
+    }
+  </style>
+</head>
+<body>
 
-<div class="text-center">
-    <h1 class="display-4">Hello World from .Net 6</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <hr />
-    <div>Host operating system: @Model.OSVersion</div>
-</div>
+  <h1>Lab Values Form</h1>
+
+  <form id="labForm">
+    <div>
+      <label for="hemoglobin">Hemoglobin:</label>
+      <input type="number" id="hemoglobin" required>
+    </div>
+    <div>
+      <label for="cholesterol">Cholesterol:</label>
+      <input type="number" id="cholesterol" required>
+    </div>
+    <div>
+      <label for="glucose">Glucose:</label>
+      <input type="number" id="glucose" required>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="analysisResult"></div>
+
+  <script>
+    document.getElementById('labForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const hemoglobin = parseFloat(document.getElementById('hemoglobin').value);
+      const cholesterol = parseFloat(document.getElementById('cholesterol').value);
+      const glucose = parseFloat(document.getElementById('glucose').value);
+
+      let result = 'Analysis:<br>';
+
+      if (hemoglobin < 13.5) {
+        result += 'Low Hemoglobin<br>';
+      } else if (hemoglobin > 17.5) {
+        result += 'High Hemoglobin<br>';
+      } else {
+        result += 'Normal Hemoglobin<br>';
+      }
+
+      if (cholesterol < 200) {
+        result += 'Normal Cholesterol<br>';
+      } else if (cholesterol < 240) {
+        result += 'Borderline High Cholesterol<br>';
+      } else {
+        result += 'High Cholesterol<br>';
+      }
+
+      if (glucose < 70) {
+        result += 'Low Glucose<br>';
+      } else if (glucose > 140) {
+        result += 'High Glucose<br>';
+      } else {
+        result += 'Normal Glucose<br>';
+      }
+
+      document.getElementById('analysisResult').innerHTML = result;
+    });
+  </script>
+
+</body>
+</html>
